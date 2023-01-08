@@ -1,16 +1,17 @@
 package com.fmiunibuc.FoodDeliveryApp.services.impl;
 
 import com.fmiunibuc.FoodDeliveryApp.entities.Driver;
-import com.fmiunibuc.FoodDeliveryApp.entities.Product;
 import com.fmiunibuc.FoodDeliveryApp.entities.Restaurant;
+import com.fmiunibuc.FoodDeliveryApp.exception.DriverNotFoundException;
+import com.fmiunibuc.FoodDeliveryApp.exception.RestaurantNotFoundException;
 import com.fmiunibuc.FoodDeliveryApp.repositories.DriverRepository;
-import com.fmiunibuc.FoodDeliveryApp.repositories.ProductRepository;
 import com.fmiunibuc.FoodDeliveryApp.repositories.RestaurantRepository;
 import com.fmiunibuc.FoodDeliveryApp.services.DriverService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DriverServiceImpl implements DriverService {
@@ -23,7 +24,12 @@ public class DriverServiceImpl implements DriverService {
 
     @Override
     public Driver getDriverById(int id){
-        return driverRepository.findById(id).get();
+        Optional<Driver> driver = driverRepository.findById(id);
+        if(driver.isPresent()){
+            return driver.get();
+        } else {
+            throw new DriverNotFoundException();
+        }
     }
 
     @Override
@@ -32,17 +38,28 @@ public class DriverServiceImpl implements DriverService {
     }
     @Override
     public Driver addDriver(Driver driver, int restaurantId){
-        Restaurant restaurant = restaurantRepository.findById(restaurantId).get();
-        driver.setRestaurant(restaurant);
-        return driverRepository.save(driver);
+        Optional<Restaurant> restaurant = restaurantRepository.findById(restaurantId);
+        if(restaurant.isPresent()){
+            driver.setRestaurant(restaurant.get());
+            return driverRepository.save(driver);
+        } else {
+            throw new RestaurantNotFoundException(restaurantId);
+        }
+
     };
 
     @Override
     public void updateDriver(int id, Driver driver){
-        Driver driverUpdated = driverRepository.findById(id).get();
-        driverUpdated.setName(driver.getName());
-        driverUpdated.setPhonenumber(driver.getPhonenumber());
-        driverRepository.save(driverUpdated);
+        Optional<Driver> driverUpdated = driverRepository.findById(id);
+        if(driverUpdated.isPresent()){
+            Driver driverUpdatedValue = driverUpdated.get();
+            driverUpdatedValue.setName(driver.getName());
+            driverUpdatedValue.setPhonenumber(driver.getPhonenumber());
+            driverRepository.save(driverUpdatedValue);
+        } else {
+            throw new DriverNotFoundException();
+        }
+
     }
 
     @Override

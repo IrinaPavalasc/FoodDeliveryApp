@@ -1,12 +1,14 @@
 package com.fmiunibuc.FoodDeliveryApp.services.impl;
 
 import com.fmiunibuc.FoodDeliveryApp.entities.User;
+import com.fmiunibuc.FoodDeliveryApp.exception.UserNotFoundException;
 import com.fmiunibuc.FoodDeliveryApp.repositories.UserRepository;
 import com.fmiunibuc.FoodDeliveryApp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -17,7 +19,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(int id) {
-        return userRepository.findById(id).get();
+        Optional<User> user = userRepository.findById(id);
+        if(user.isPresent()){
+            return user.get();
+        } else {
+            throw new UserNotFoundException(id);
+        }
     }
 
     @Override
@@ -32,12 +39,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(int id, User user){
-        User userUpdated = userRepository.findById(id).get();
-        userUpdated.setUsername(user.getUsername());
-        userUpdated.setAddress(user.getAddress());
-        userUpdated.setPhonenumber(user.getPhonenumber());
-        userUpdated.setEmail(user.getEmail());
-        userRepository.save(userUpdated);
+        Optional<User> userUpdated = userRepository.findById(id);
+        if(userUpdated.isPresent()){
+            User userUpdatedValue = userUpdated.get();
+            userUpdatedValue.setUsername(user.getUsername());
+            userUpdatedValue.setAddress(user.getAddress());
+            userUpdatedValue.setPhonenumber(user.getPhonenumber());
+            userUpdatedValue.setEmail(user.getEmail());
+            userRepository.save(userUpdatedValue);
+        } else {
+            throw new UserNotFoundException(id);
+        }
     }
 
     @Override

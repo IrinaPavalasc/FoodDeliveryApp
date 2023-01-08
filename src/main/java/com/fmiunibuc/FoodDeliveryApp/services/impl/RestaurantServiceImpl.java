@@ -1,6 +1,7 @@
 package com.fmiunibuc.FoodDeliveryApp.services.impl;
 
 import com.fmiunibuc.FoodDeliveryApp.entities.Restaurant;
+import com.fmiunibuc.FoodDeliveryApp.exception.RestaurantNotFoundException;
 import com.fmiunibuc.FoodDeliveryApp.repositories.RestaurantRepository;
 import com.fmiunibuc.FoodDeliveryApp.services.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,14 @@ public class RestaurantServiceImpl implements RestaurantService {
     private RestaurantRepository restaurantRepository;
 
     @Override
-    public Restaurant getRestaurantById(int id) {return restaurantRepository.findById(id).get();}
+    public Restaurant getRestaurantById(int id) {
+        Optional<Restaurant> restaurant = restaurantRepository.findById(id);
+        if(restaurant.isPresent()){
+            return restaurant.get();
+        } else {
+            throw new RestaurantNotFoundException(id);
+        }
+    }
 
     @Override
     public List<Restaurant> getRestaurantList() {
@@ -30,11 +38,16 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public void updateRestaurant(int id, Restaurant restaurant){
-        Restaurant restaurantUpdated = restaurantRepository.findById(id).get();
-        restaurantUpdated.setName(restaurant.getName());
-        restaurantUpdated.setAddress(restaurant.getAddress());
-        restaurantUpdated.setSchedule(restaurant.getSchedule());
-        restaurantRepository.save(restaurantUpdated);
+        Optional<Restaurant> restaurantUpdated = restaurantRepository.findById(id);
+        if(restaurantUpdated.isPresent()){
+            Restaurant restaurantUpdatedValue = restaurantUpdated.get();
+            restaurantUpdatedValue.setName(restaurant.getName());
+            restaurantUpdatedValue.setAddress(restaurant.getAddress());
+            restaurantUpdatedValue.setSchedule(restaurant.getSchedule());
+            restaurantRepository.save(restaurantUpdatedValue);
+        } else {
+            throw new RestaurantNotFoundException(id);
+        }
     }
 
     @Override
