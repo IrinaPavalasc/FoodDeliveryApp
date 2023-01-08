@@ -1,7 +1,10 @@
 package com.fmiunibuc.FoodDeliveryApp.entities;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Table(name = "restaurant")
@@ -13,7 +16,7 @@ public class Restaurant {
     private int id;
     @Column(name = "name", nullable = false)
     @NotBlank(message = "Name cannot be missing.")
-    @Size(min = 5, max = 30)
+    @Size(min = 3, max = 50)
     private String name;
 
     @Column(name = "address", nullable = false)
@@ -24,6 +27,11 @@ public class Restaurant {
     @Column(name = "schedule")
     @Size(max = 100)
     private String schedule;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "restaurant")
+    private List<Product> products;
+
 
     public int getId() {
         return id;
