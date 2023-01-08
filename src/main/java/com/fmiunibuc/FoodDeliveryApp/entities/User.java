@@ -27,7 +27,7 @@ public class User {
 
     @Column(name = "phonenumber", nullable = false)
     @NotBlank(message = "Phone number cannot be missing.")
-    @Pattern(regexp = "[0-9]{10}", message = "The phone number must be valid.")
+    //@Pattern(regexp = "[0-9]{10}", message = "The phone number must be valid.")
     private String phonenumber;
 
     @Column(name = "email", nullable = false)

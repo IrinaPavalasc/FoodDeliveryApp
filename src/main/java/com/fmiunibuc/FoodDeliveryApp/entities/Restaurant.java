@@ -32,6 +32,9 @@ public class Restaurant {
     @OneToMany(mappedBy = "restaurant")
     private List<Product> products;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "restaurant")
+    private List<Driver> drivers;
 
     public int getId() {
         return id;
@@ -63,5 +66,21 @@ public class Restaurant {
 
     public void setSchedule(String schedule) {
         this.schedule = schedule;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
+    public List<Driver> getDrivers() {
+        return drivers;
+    }
+
+    public void setDrivers(List<Driver> drivers) {
+        this.drivers = drivers;
     }
 }

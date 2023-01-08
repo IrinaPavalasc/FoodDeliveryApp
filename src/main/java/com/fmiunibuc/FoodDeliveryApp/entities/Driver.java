@@ -21,7 +21,7 @@ public class Driver {
 
     @Column(name = "phonenumber", nullable = false)
     @NotBlank(message = "Phone number cannot be missing.")
-    @Pattern(regexp = "(\\07)[0-9]{8}", message = "The phone number must be valid.")
+    @Pattern(regexp = "[0-9]{10}", message = "The phone number must be valid.")
     private String phonenumber;
 
     @ManyToOne(optional = false)
@@ -50,5 +50,13 @@ public class Driver {
 
     public void setPhonenumber(String phonenumber) {
         this.phonenumber = phonenumber;
+    }
+
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
     }
 }
