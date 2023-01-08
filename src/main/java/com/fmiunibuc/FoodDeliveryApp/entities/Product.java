@@ -1,10 +1,13 @@
 package com.fmiunibuc.FoodDeliveryApp.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Table(name = "product")
@@ -21,7 +24,7 @@ public class Product {
     private String name;
 
     @Column(name = "description")
-    @Size(min = 5, max = 200)
+    @Size(min = 3, max = 200)
     private String description;
 
     @Column(name = "price", nullable = false)
@@ -30,12 +33,21 @@ public class Product {
     private int price;
 
     @Column(name = "category")
-    @Size(min = 5, max = 50)
+    @Size(min = 3, max = 50)
     private String category;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "restaurant_id", referencedColumnName = "id", unique = true)
+    @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
     private Restaurant restaurant;
+
+    @JsonIgnore
+    @ManyToMany()
+    @JoinTable(
+            name = "order_product",
+            joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "order_id", referencedColumnName = "id")
+    )
+    private List<Order> orders;
 
     public int getId() {
         return id;

@@ -1,9 +1,12 @@
 package com.fmiunibuc.FoodDeliveryApp.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Table(name = "driver")
@@ -27,6 +30,11 @@ public class Driver {
     @ManyToOne(optional = false)
     @JoinColumn(name = "restaurant_id", referencedColumnName = "id", unique = true)
     private Restaurant restaurant;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "driver")
+    private List<Order> orders;
+
 
     public int getId() {
         return id;

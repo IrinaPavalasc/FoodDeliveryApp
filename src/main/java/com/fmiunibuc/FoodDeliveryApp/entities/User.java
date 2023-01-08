@@ -1,10 +1,13 @@
 package com.fmiunibuc.FoodDeliveryApp.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Table(name = "client")
@@ -34,6 +37,10 @@ public class User {
     @NotBlank(message = "Email cannot be missing.")
     @Email(message = "The email must be valid.")
     private String email;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<Order> orders;
 
     public int getId() {
         return id;

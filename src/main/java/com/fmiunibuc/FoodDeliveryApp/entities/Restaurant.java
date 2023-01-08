@@ -36,6 +36,10 @@ public class Restaurant {
     @OneToMany(mappedBy = "restaurant")
     private List<Driver> drivers;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "restaurant")
+    private List<Order> orders;
+
     public int getId() {
         return id;
     }
