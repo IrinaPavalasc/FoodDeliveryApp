@@ -7,6 +7,7 @@ import com.fmiunibuc.FoodDeliveryApp.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -80,6 +81,7 @@ public class OrderServiceImpl implements OrderService {
             order.setRestaurant(restaurant.get());
             order.setUser(user.get());
             order.setDriver(driver.get());
+            order.setTotalprice(0);
             return orderRepository.save(order);
         }
     }
@@ -87,7 +89,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order addProductToOrder(int id, int productId){
         Optional<Order> order = orderRepository.findById(id);
-        Optional<Product> product = productRepository.findById(id);
+        Optional<Product> product = productRepository.findById(productId);
         if(order.isEmpty()){
             throw new OrderNotFoundException();
         }
@@ -97,8 +99,16 @@ public class OrderServiceImpl implements OrderService {
         else {
             Order orderValue = order.get();
             Product productValue = product.get();
-            orderValue.getProducts().add(productValue);
-            return orderRepository.save(orderValue);
+            if(productValue.getId() != orderValue.getRestaurant().getId()){
+                throw new DifferentRestaurantException();
+            }
+            else {
+                List<Product> products = new ArrayList<>();
+                products.add(productValue);
+                orderValue.setProducts(products);
+                orderValue.setTotalprice(orderValue.getTotalprice() + productValue.getPrice());
+                return orderRepository.save(orderValue);
+            }
         }
     }
     @Override
@@ -115,6 +125,7 @@ public class OrderServiceImpl implements OrderService {
             Order orderValue = order.get();
             Product productValue = product.get();
             orderValue.getProducts().remove(productValue);
+            orderValue.setTotalprice(orderValue.getTotalprice() - productValue.getPrice());
             return orderRepository.save(orderValue);
         }
 

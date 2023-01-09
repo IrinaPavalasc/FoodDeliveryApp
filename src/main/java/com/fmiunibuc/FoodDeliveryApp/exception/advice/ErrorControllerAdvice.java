@@ -1,6 +1,7 @@
 package com.fmiunibuc.FoodDeliveryApp.exception.advice;
 
 import com.fmiunibuc.FoodDeliveryApp.exception.*;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,25 @@ public class ErrorControllerAdvice {
                         .map(error -> error.getDefaultMessage())
                         .collect(Collectors.joining(", "))
                 );
+    }
+
+    @ExceptionHandler({DifferentRestaurantException.class})
+    public ResponseEntity<String> handle(DifferentRestaurantException e) {
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(e.getMessage() + " at " + LocalDateTime.now());
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException e){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(e.getMessage() + " at " + LocalDateTime.now());
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<Object> handleDataAccessException(EmptyResultDataAccessException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body("Resource does not exist at " + LocalDateTime.now());
     }
 
 }

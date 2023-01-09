@@ -1,16 +1,13 @@
 package com.fmiunibuc.FoodDeliveryApp.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
-@Table(name = "food_order", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"restaurant_id", "driver_id", "user_id"})
-})
+@Table(name = "food_order")
 public class Order {
 
     @Id
@@ -19,13 +16,12 @@ public class Order {
     private int id;
 
     @Column(name = "order_date", nullable = false)
-    @NotEmpty(message = "The order date cannot be missing.")
-    private String orderdate;
+    @NotNull(message = "The order date cannot be missing.")
+    private Timestamp orderdate;
 
-    @Column(name = "total_price", nullable = false)
-    @NotNull(message = "The total price cannot be missing.")
+    @Column(name = "total_price")
     @Min(0)
-    private int totalprice;
+    private int totalprice = 0;
 
     @Column(name = "predicted_delivery_time", nullable = false)
     @NotNull(message = "The predicted delivery time cannot be missing.")
@@ -66,11 +62,11 @@ public class Order {
         this.id = id;
     }
 
-    public String getOrderdate() {
+    public Timestamp getOrderdate() {
         return orderdate;
     }
 
-    public void setOrderdate(String orderdate) {
+    public void setOrderdate(Timestamp orderdate) {
         this.orderdate = orderdate;
     }
 
@@ -128,5 +124,12 @@ public class Order {
 
     public void setProducts(List<Product> products) {
         this.products = products;
+    }
+
+    public Order(Timestamp orderdate, int totalprice, int predictedDeliveryTime, String status) {
+        this.orderdate = orderdate;
+        this.totalprice = totalprice;
+        this.predictedDeliveryTime = predictedDeliveryTime;
+        this.status = status;
     }
 }

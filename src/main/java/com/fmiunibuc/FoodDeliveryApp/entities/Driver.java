@@ -67,4 +67,9 @@ public class Driver {
     public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
     }
+
+    public Driver(String name, String phonenumber) {
+        this.name = name;
+        this.phonenumber = phonenumber;
+    }
 }

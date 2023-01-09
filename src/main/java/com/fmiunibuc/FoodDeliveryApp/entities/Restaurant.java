@@ -87,4 +87,10 @@ public class Restaurant {
     public void setDrivers(List<Driver> drivers) {
         this.drivers = drivers;
     }
+
+    public Restaurant(String name, String address, String schedule) {
+        this.name = name;
+        this.address = address;
+        this.schedule = schedule;
+    }
 }
