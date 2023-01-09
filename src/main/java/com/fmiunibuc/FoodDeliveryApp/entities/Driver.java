@@ -28,13 +28,12 @@ public class Driver {
     private String phonenumber;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "restaurant_id", referencedColumnName = "id", unique = true)
+    @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
     private Restaurant restaurant;
 
     @JsonIgnore
     @OneToMany(mappedBy = "driver")
     private List<Order> orders;
-
 
     public int getId() {
         return id;
@@ -66,6 +65,9 @@ public class Driver {
 
     public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
+    }
+
+    public Driver() {
     }
 
     public Driver(String name, String phonenumber) {

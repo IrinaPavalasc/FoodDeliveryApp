@@ -1,4 +1,4 @@
-package com.fmiunibuc.FoodDeliveryApp;
+package com.fmiunibuc.FoodDeliveryApp.services;
 
 import com.fmiunibuc.FoodDeliveryApp.entities.Product;
 import com.fmiunibuc.FoodDeliveryApp.entities.Restaurant;

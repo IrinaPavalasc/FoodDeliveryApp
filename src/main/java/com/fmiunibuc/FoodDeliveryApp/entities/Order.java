@@ -126,6 +126,9 @@ public class Order {
         this.products = products;
     }
 
+    public Order() {
+    }
+
     public Order(Timestamp orderdate, int totalprice, int predictedDeliveryTime, String status) {
         this.orderdate = orderdate;
         this.totalprice = totalprice;

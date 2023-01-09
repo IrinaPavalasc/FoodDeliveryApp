@@ -1,4 +1,4 @@
-package com.fmiunibuc.FoodDeliveryApp;
+package com.fmiunibuc.FoodDeliveryApp.services;
 
 import com.fmiunibuc.FoodDeliveryApp.entities.User;
 import com.fmiunibuc.FoodDeliveryApp.repositories.UserRepository;

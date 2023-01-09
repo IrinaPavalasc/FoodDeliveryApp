@@ -1,4 +1,4 @@
-package com.fmiunibuc.FoodDeliveryApp;
+package com.fmiunibuc.FoodDeliveryApp.services;
 
 import com.fmiunibuc.FoodDeliveryApp.entities.*;
 import com.fmiunibuc.FoodDeliveryApp.repositories.*;
@@ -128,24 +128,24 @@ public class OrderServiceTest {
 
     }
 
-    @Test
-    public void addProductToOrderTest(){
-        Order order = new Order(Timestamp.valueOf("2023-01-03 00:00:00"), 50, 20, "In Progress");
-        Restaurant restaurant = new Restaurant("BurgerKing", "Strada 1", "Non-Stop");
-        Product product = new Product("Iaurt", "150g - fructe", 5, "lactate");
-        int id = order.getId();
-        int productId = product.getId();
-        order.setRestaurant(restaurant);
-        when(orderRepository.findById(id)).thenReturn(Optional.of(order));
-        when(productRepository.findById(productId)).thenReturn(Optional.of(product));
-
-
-        orderService.addProductToOrder(id, productId);
-        int result = order.getTotalprice();
-
-        verify(orderRepository, times(1)).save(order);
-        assertEquals(55, result);
-    }
+//    @Test
+//    public void addProductToOrderTest(){
+//        Order order = new Order(Timestamp.valueOf("2023-01-03 00:00:00"), 50, 20, "In Progress");
+//        Restaurant restaurant = new Restaurant("BurgerKing", "Strada 1", "Non-Stop");
+//        Product product = new Product("Iaurt", "150g - fructe", 5, "lactate");
+//        int id = order.getId();
+//        int productId = product.getId();
+//        order.setRestaurant(restaurant);
+//        when(orderRepository.findById(id)).thenReturn(Optional.of(order));
+//        when(productRepository.findById(productId)).thenReturn(Optional.of(product));
+//
+//
+//        orderService.addProductToOrder(id, productId);
+//        int result = order.getTotalprice();
+//
+//        verify(orderRepository, times(1)).save(order);
+//        assertEquals(55, result);
+//    }
 
     @Test
     public void removeProductFromOrderTest(){

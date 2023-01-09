@@ -99,13 +99,11 @@ public class OrderServiceImpl implements OrderService {
         else {
             Order orderValue = order.get();
             Product productValue = product.get();
-            if(productValue.getId() != orderValue.getRestaurant().getId()){
+            if(productValue.getRestaurant().getId() != orderValue.getRestaurant().getId()){
                 throw new DifferentRestaurantException();
             }
             else {
-                List<Product> products = new ArrayList<>();
-                products.add(productValue);
-                orderValue.setProducts(products);
+                orderValue.getProducts().add(productValue);
                 orderValue.setTotalprice(orderValue.getTotalprice() + productValue.getPrice());
                 return orderRepository.save(orderValue);
             }

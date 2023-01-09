@@ -17,12 +17,12 @@ import java.util.List;
 public class DriverController {
     @Autowired
     private DriverService driverService;
-    @GetMapping("/driver/{restaurantId}")
+    @GetMapping("/driver/restaurant/{restaurantId}")
     public ResponseEntity<List<Driver>> getDriversByRestaurantId(@PathVariable int restaurantId){
         List<Driver> driverList = (List<Driver>) driverService.getDriversByRestaurantId(restaurantId);
         return new ResponseEntity<>(driverList, HttpStatus.OK);
     }
-    @PostMapping("/driver/add/{restaurantId}")
+    @PostMapping("/driver/add/restaurant/{restaurantId}")
     public ResponseEntity<Driver> addDriver(@RequestBody @Valid Driver driver, @PathVariable int restaurantId){
         return new ResponseEntity<>(driverService.addDriver(driver, restaurantId), HttpStatus.CREATED);
     }

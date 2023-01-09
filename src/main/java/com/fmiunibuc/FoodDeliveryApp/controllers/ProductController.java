@@ -17,12 +17,12 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
-    @GetMapping("/product/{restaurantId}")
+    @GetMapping("/product/restaurant/{restaurantId}")
     public ResponseEntity<List<Product>> getProductsByRestaurantId(@PathVariable int restaurantId){
         List<Product> productList = (List<Product>) productService.getProductsByRestaurantId(restaurantId);
         return new ResponseEntity<>(productList, HttpStatus.OK);
     }
-    @PostMapping("/product/add/{restaurantId}")
+    @PostMapping("/product/add/restaurant/{restaurantId}")
     public ResponseEntity<Product> addProduct(@RequestBody @Valid Product product, @PathVariable int restaurantId){
         return new ResponseEntity<>(productService.addProduct(product, restaurantId), HttpStatus.CREATED);
     }

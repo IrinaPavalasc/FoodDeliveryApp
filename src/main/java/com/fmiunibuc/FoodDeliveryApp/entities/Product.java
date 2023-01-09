@@ -97,6 +97,9 @@ public class Product {
         this.restaurant = restaurant;
     }
 
+    public Product() {
+    }
+
     public Product(String name, String description, int price, String category) {
         this.name = name;
         this.description = description;

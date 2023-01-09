@@ -88,6 +88,9 @@ public class Restaurant {
         this.drivers = drivers;
     }
 
+    public Restaurant() {
+    }
+
     public Restaurant(String name, String address, String schedule) {
         this.name = name;
         this.address = address;

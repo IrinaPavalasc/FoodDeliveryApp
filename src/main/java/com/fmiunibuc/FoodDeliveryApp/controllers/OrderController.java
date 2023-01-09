@@ -37,17 +37,17 @@ public class OrderController {
         List<Product> productList = (List<Product>) orderService.getProductsByOrderId(id);
         return new ResponseEntity<>(productList, HttpStatus.OK);
     }
-    @PostMapping("/order/add/{restaurantId}/{userId}/{driverId}")
+    @PostMapping("/order/add/restaurant/{restaurantId}/user/{userId}/driver/{driverId}")
     public ResponseEntity<Order> addOrder(@RequestBody @Valid Order order, @PathVariable int restaurantId, @PathVariable int userId, @PathVariable int driverId){
         return new ResponseEntity<>(orderService.addOrder(order, restaurantId, userId, driverId), HttpStatus.CREATED);
     }
 
-    @PutMapping("/order/add/{id}/{productId}")
+    @PutMapping("/order/add/{id}/product/{productId}")
     public ResponseEntity<Order> addProductToOrder(@PathVariable int id, @PathVariable int productId){
         return new ResponseEntity<>(orderService.addProductToOrder(id, productId), HttpStatus.OK);
     }
 
-    @PutMapping("/order/remove/{id}/{productId}")
+    @PutMapping("/order/remove/{id}/product/{productId}")
     public ResponseEntity<Order> removeProductFromOrder(@PathVariable int id, @PathVariable int productId){
         return new ResponseEntity<>(orderService.removeProductFromOrder(id, productId), HttpStatus.OK);
     }
