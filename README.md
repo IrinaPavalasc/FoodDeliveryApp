@@ -5,7 +5,7 @@
 Aplicația este una destinată atât utilizatorilor, cât și restaurantelor, pentru a facilita comanda produselor alimentare online. Restaurantele dispun și de un numar de curieri, care asigură livrarea produselor.
  
 
-##Requirements:
+## Requirements:
 
 1.	Utilizatorul își poate crea cont în aplicație. Restaurantul poate fi adăugat ca partener.
 2.	Clientul își poate edita datele personale (precum numele și adresa).
@@ -19,7 +19,7 @@ Aplicația este una destinată atât utilizatorilor, cât și restaurantelor, pe
 10.	Administratorul poate modera conținutul aplicației pentru a se asigura că platforma este un mediu sigur și scopul acesteia nu este alterat.
 
 
-##Minimum Viable Product Requirements:
+## Minimum Viable Product Requirements:
 
 1.	Pot fi adăugați în aplicație utilizatori, datele acestora pot fi editate. Pot fi selectate detaliile unui utilizator specific sau se poate obține o listă de utilizatori. Un utilizator poate fi șters.
 
